@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +26,19 @@ public class LivrosDetalheController {
 	public ResponseEntity<List<LivroDetalheResponse>> listaLivro() {
 		List<Livro> livros = manager.createQuery("select l from Livro l").getResultList();
 		List<LivroDetalheResponse> livrosResponse = LivroDetalheResponse.converteParaDto(livros);
-		return ResponseEntity.ok(livrosResponse);
+		return ResponseEntity.ok(livrosResponse);		
 	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<LivroResponse> detalhar(@PathVariable Integer id) {
+		Livro livroPesquisado = manager.find(Livro.class, id);
+		if(livroPesquisado == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(new LivroResponse(livroPesquisado));
+	}
+	
 
+	
 }
+

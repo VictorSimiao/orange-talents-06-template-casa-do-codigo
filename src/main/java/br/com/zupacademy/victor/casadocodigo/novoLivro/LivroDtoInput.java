@@ -78,7 +78,7 @@ public class LivroDtoInput {
 		Categoria categoria = manager.getReference(Categoria.class, idCategoria);
 		@NotNull
 		Autor autor = manager.getReference(Autor.class, idAutor);
-		return new Livro(titulo,resumo,sumario,preco,numeroPaginas,isbn,categoria,autor);
+		return new Livro(titulo,resumo,sumario,preco,numeroPaginas,isbn,dataPublicacao,categoria,autor);
 	}
 
 
