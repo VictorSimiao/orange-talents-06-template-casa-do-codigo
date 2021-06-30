@@ -22,9 +22,9 @@ public class AutoresController {
 
 	@PostMapping
 	@Transactional
-	public ResponseEntity<AutorDtoResponse> novoAutor(@RequestBody @Valid AutorDtoInput autorInput) {
+	public ResponseEntity<?> novoAutor(@RequestBody @Valid AutorDtoInput autorInput) {
 		Autor novoAutor = autorInput.converter();
 		manager.persist(novoAutor);
-		return ResponseEntity.ok(new AutorDtoResponse(novoAutor));
+		return ResponseEntity.ok().build();
 	}
 }

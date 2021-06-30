@@ -23,10 +23,10 @@ public class CategoriasController {
 
 	@PostMapping
 	@Transactional
-	public ResponseEntity<CategoriaDtoResponse> cadastroCategoria(@RequestBody @Valid CategoriaDtoInput input) {
+	public ResponseEntity<?> cadastroCategoria(@RequestBody @Valid CategoriaDtoInput input) {
 		Categoria novaCategoria = input.converter();
 		manager.persist(novaCategoria);
-		return ResponseEntity.ok(new CategoriaDtoResponse(novaCategoria));
+		return ResponseEntity.ok().build();
 	}
 
 }
