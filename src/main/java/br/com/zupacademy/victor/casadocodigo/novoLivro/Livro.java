@@ -50,6 +50,11 @@ public class Livro {
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	private  Autor autor;
+	
+	@Deprecated
+	public Livro() {
+		
+	}
 
 	public Livro(@NotBlank String titulo, @NotBlank @Size(max = 500) String resumo, @NotBlank String sumario,
 			@NotNull @Min(20) BigDecimal preco, @NotNull @Min(100) Integer numeroPaginas, @NotBlank String isbn,
@@ -62,6 +67,14 @@ public class Livro {
 				this.isbn = isbn;
 				this.categoria = categoria;
 				this.autor = autor;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public String getTitulo() {
+		return titulo;
 	}
 	
 	
