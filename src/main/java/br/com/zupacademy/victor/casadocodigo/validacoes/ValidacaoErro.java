@@ -20,19 +20,23 @@ public class ValidacaoErro {
 	public ValidacaoErro(MessageSource messageSource) {
 		this.messageSource = messageSource;
 	}
-	
+
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public List<ErroDeFormularioDto> handle(MethodArgumentNotValidException exception){
+	public List<?> handle(MethodArgumentNotValidException exception) {
 		List<ErroDeFormularioDto> dtos = new ArrayList<ErroDeFormularioDto>();
-		
-		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
-		fieldErrors.forEach(erro ->{
-			String mensagem = messageSource.getMessage(erro, LocaleContextHolder.getLocale());
-			ErroDeFormularioDto erroDto = new ErroDeFormularioDto(erro.getField(), mensagem);
-			dtos.add(erroDto);
-		});
-		return dtos;
-		
+
+		List<FieldError> errosDeCampos = exception.getBindingResult().getFieldErrors();
+		if (!errosDeCampos.isEmpty()) {
+
+			List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
+			fieldErrors.forEach(erro -> {
+				String mensagem = messageSource.getMessage(erro, LocaleContextHolder.getLocale());
+				ErroDeFormularioDto erroDto = new ErroDeFormularioDto(erro.getField(), mensagem);
+				dtos.add(erroDto);
+			});
+			return dtos;
+		}
+		return exception.getBindingResult().getGlobalErrors();
 	}
 }
