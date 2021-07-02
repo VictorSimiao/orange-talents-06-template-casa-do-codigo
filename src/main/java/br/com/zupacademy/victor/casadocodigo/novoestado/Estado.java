@@ -35,5 +35,9 @@ public class Estado {
 	public Estado() {
 
 	}
+	
+	public boolean contemPais(Pais pais) {
+		return this.pais.equals(pais);
+	}
 
 }
